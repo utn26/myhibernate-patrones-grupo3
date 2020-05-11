@@ -8,6 +8,7 @@ import java.util.List;
 
 import myhibernate.connect.ConnectorSQL;
 import myhibernate.demo.Producto;
+import myhibernate.functions.Utils;
 
 public class MyHibernate
 {
@@ -21,9 +22,9 @@ public class MyHibernate
 		try
 		{
 			Statement statement=(Statement)connection.createStatement();
-//			ResultSet resultset = statement.executeQuery(generateQuery(Class<T> clazz, int id));
+			ResultSet resultset = statement.executeQuery(Utils.generateQuery(clazz,id));
 //			//2.generamos el objeto con el resultado de la query
-//			ObjectResult = loadObject(resultset);
+//			ObjectResult = Utils.loadObject(resultset);
 //			
 		}
 		catch(SQLException e)
