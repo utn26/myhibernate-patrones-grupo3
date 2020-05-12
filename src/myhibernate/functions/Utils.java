@@ -17,19 +17,18 @@ public final class Utils
 	{
 
 		QueryBuilder query=buildQuery(new QueryBuilder(),clazz,97);
+		String finalCondition = "and "+query.getFinalCondition()+"="+String.valueOf(id);
 
-		String queryResult="select \n";
-		queryResult+=query.getColumns();
-		queryResult+="from "+query.getNameFirstTable();
+		String queryResult = query.getColumns();
+		queryResult+=query.getNameFirstTable();
 		queryResult+=query.getInnerJoins();
-		queryResult+="and "+query.getFinalCondition()+"="+String.valueOf(id);
+		queryResult+=finalCondition;
 		System.out.println(queryResult);
 		return queryResult;
 	}
 
 	public static <T> QueryBuilder buildQuery(QueryBuilder query, Class<T> clazz, int aliasCod)
 	{
-		String primaryKey="";
 		String alias = String.valueOf((char) aliasCod);
 		// annotations for classes
 		Annotation[] annotations=clazz.getAnnotations();
@@ -44,7 +43,7 @@ public final class Utils
 				Table myAnnotation=(Table)annotation;
 				if(query.getNameFirstTable().equals(""))
 				{
-					query.setNameFirstTable(myAnnotation.name()+" "+alias+"\n");
+					query.setNameFirstTable("\nfrom "+myAnnotation.name()+" "+alias+"\n");
 				}
 				if(query.getInnerJoins().indexOf("XXNAMEXX")>0){
 					query.setInnerJoins(query.getInnerJoins().replace("XXNAMEXX",myAnnotation.name()));
@@ -73,10 +72,21 @@ public final class Utils
 					{
 						query.setFinalCondition(alias+"."+myAnnotation.name());
 					}
-					primaryKey=myAnnotation.name();
 					if(query.getInnerJoins().indexOf("XXIDXX")>0){
 						query.setInnerJoins(query.getInnerJoins().replace("XXIDXX",alias+"."+myAnnotation.name()));
 					}
+				}
+				if(annotation instanceof Column)
+				{
+					Column myAnnotation=(Column)annotation;
+					String split ="";
+					if(!query.getColumns().equals("")){
+						split = ",\n";
+					}else{
+						query.setColumns("select \n");
+					}
+					query.setColumns(query.getColumns()+split+alias+"."+myAnnotation.name());
+					
 				}
 				if(annotation instanceof ManyToOne)
 				{
@@ -84,17 +94,11 @@ public final class Utils
 				}
 				if(annotation instanceof JoinColumn)
 				{
-					//JoinColumn myAnnotation=(JoinColumn)annotation;
+					JoinColumn myAnnotation=(JoinColumn)annotation;
 					String join="inner join XXNAMEXX XXALIASXX\n";
-					join+="on "+alias+"."+primaryKey+"=XXIDXX\n";
+					join+="on "+alias+"."+myAnnotation.name()+"=XXIDXX\n";
 					query.setInnerJoins(query.getInnerJoins()+join);
 					query=buildQuery(query,field.getType(),aliasCod+1);
-
-				}
-				if(annotation instanceof Column)
-				{
-					Column myAnnotation=(Column)annotation;
-					query.setColumns(query.getColumns()+alias+"."+myAnnotation.name()+"\n");
 
 				}
 
