@@ -14,23 +14,6 @@ public class Demo
 {
 	public static void main(String[] args)
 	{
-		// conexion con la base de datos ejemplo
-		Connection connection=ConnectorSQL.conectar();
-		try
-		{
-			Statement statement=(Statement)connection.createStatement();
-			ResultSet resultset=statement.executeQuery("select * from categoria");
-			while(resultset.next())
-			{
-				System.out.println(resultset.getString("id_categoria"));
-			}
-
-		}
-		catch(SQLException e)
-		{
-			throw new RuntimeException();
-		}
-
 		// primer caso: busqueda por id
 		Producto p=MyHibernate.find(Producto.class,1);
 		System.out.println(p.getDescripcion()+", "+p.getProveedor().getEmpresa());
