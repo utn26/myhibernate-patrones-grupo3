@@ -9,6 +9,7 @@ import java.util.List;
 import myhibernate.connect.ConnectorSQL;
 import myhibernate.demo.Producto;
 import myhibernate.functions.Utils;
+import myhibernate.model.TableEntity;
 
 public class MyHibernate
 {
@@ -22,12 +23,14 @@ public class MyHibernate
 		{
 			Statement statement=(Statement)connection.createStatement();
 			
+			
 			// 1. generamis la query string
-			// generateQuery(Class<T> clazz, int id);
-			ResultSet resultset = statement.executeQuery(Utils.queryGenerator(clazz,id));
+			// queryGenerator(Class<T> clazz, int id);
+			TableEntity table = Utils.queryBuilder(clazz, 97);
+			ResultSet resultset = statement.executeQuery(Utils.queryGenerator(clazz,id,table));
 			
 			//2.generamos el objeto con el resultado de la query
-			//ObjectResult = (T)Utils.loadObject(resultset, clazz);
+			ObjectResult = (T)Utils.loadObject(resultset, clazz, table);
 			
 		}
 		catch(SQLException e)

@@ -8,7 +8,7 @@ public class TableEntity
 	private String tableName;
 	private String primaryKey;
 	private List<TableForeignEntity> foreignTables = new ArrayList<TableForeignEntity>();
-	private List<String> columns = new ArrayList<String>();
+	private List<ColumnEntity> columns = new ArrayList<ColumnEntity>();
 	private String alias;
 	public String getTableName()
 	{
@@ -34,11 +34,11 @@ public class TableEntity
 	{
 		this.foreignTables=foreignTables;
 	}
-	public List<String> getColumns()
+	public List<ColumnEntity> getColumns()
 	{
 		return columns;
 	}
-	public void setColumns(List<String> columns)
+	public void setColumns(List<ColumnEntity> columns)
 	{
 		this.columns=columns;
 	}
