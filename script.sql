@@ -204,6 +204,21 @@ from producto prod, proveedor prov
 where prod.id_proveedor=prov.id_proveedor
   and prod.id_producto=1
 
+select prod.descripcion,prov.empresa, prov.direccion
+from producto prod
+inner join proveedor prov
+on prod.id_proveedor=prov.id_proveedor
+and prod.id_producto=1
+  
+select 
+a.id_producto,
+a.descripcion,
+b.id_proveedor,
+b.empresa
+from producto a
+left join proveedor b
+on a.id_proveedor=b.id_proveedor
+and a.id_producto=1
 
 select * from categoria
 

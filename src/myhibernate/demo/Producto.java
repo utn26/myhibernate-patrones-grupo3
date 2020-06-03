@@ -11,45 +11,59 @@ import myhibernate.ann.Table;
 @Table(name="producto")
 public class Producto
 {
-   @Id
-   @Column(name="id_producto")
-   private int idProducto;
-   
-   @Column(name="descripcion")
-   private String descripcion;
+	@Id
+	@Column(name="id_producto")
+	private int idProducto;
 
-   @ManyToOne
-   @JoinColumn(name="id_proveedor")
-   private Proveedor proveedor;
+	@Column(name="descripcion")
+	private String descripcion;
 
-   public int getIdProducto()
-   {
-      return idProducto;
-   }
+	@ManyToOne
+	@JoinColumn(name="id_proveedor")
+	private Proveedor proveedor;
 
-   public void setIdProducto(int idProducto)
-   {
-      this.idProducto=idProducto;
-   }
+	@ManyToOne
+	@JoinColumn(name="id_categoria")
+	private Categoria categoria;
 
-   public String getDescripcion()
-   {
-      return descripcion;
-   }
+	public int getIdProducto()
+	{
+		return idProducto;
+	}
 
-   public void setDescripcion(String descripcion)
-   {
-      this.descripcion=descripcion;
-   }
+	public Categoria getCategoria()
+	{
+		return categoria;
+	}
 
-   public Proveedor getProveedor()
-   {
-      return proveedor;
-   }
+	public void setCategoria(Categoria categoria)
+	{
+		this.categoria=categoria;
+	}
 
-   public void setProveedor(Proveedor proveedor)
-   {
-      this.proveedor=proveedor;
-   }
+	public void setIdProducto(int idProducto)
+	{
+		this.idProducto=idProducto;
+	}
+
+	public String getDescripcion()
+	{
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion)
+	{
+		this.descripcion=descripcion;
+	}
+
+	public Proveedor getProveedor()
+	{
+		return proveedor;
+	}
+
+	public void setProveedor(Proveedor proveedor)
+	{
+		this.proveedor=proveedor;
+	}
 
 }
